@@ -310,3 +310,26 @@ footer {
     }
   }
 }
+.hidden {
+  display: none;
+}
+.Alert {
+  position: fixed;
+  top: 120px;
+  right: 10px;
+  z-index: 9999;
+  padding: 15px;
+  width: 300px;
+  opacity: 0;
+  border-radius: 5px;
+  background-color: #f9d71c;
+  color: white;
+  transition: background-color 0.3s ease;
+
+  &.success {
+    background-color: #4caf50;
+  }
+  &.error {
+    background-color: #f44336;
+  }
+}
