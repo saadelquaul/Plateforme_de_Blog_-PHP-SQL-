@@ -2,6 +2,45 @@
 
 include '../includes/database.php';
 
+if(isset($_POST['email'])){
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+    echo password_hash($password, PASSWORD_BCRYPT);
+
+    $stmt = $conn->prepare("SELECT Password FROM users WHERE Email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $stmt->store_result();
+    if($stmt->num_rows > 0){
+    
+        $stmt->bind_result($hashedPassword);
+        $stmt->fetch();
+        if(password_verify($password,$hashedPassword))
+        {
+            session_start();
+            $_SESSION['email'] = $email;
+            $sql = "SELECT * FROM users WHERE Email = '$email'";
+            $result = mysqli_query($conn, $sql);
+            $row = mysqli_fetch_assoc($result);
+            $_SESSION['role'] = $row['role'];
+            $_SESSION['id'] = $row['id'];
+            if($row['role'] == 'admin'){
+                header("Location:../admin/dashboard.php");
+                exit();
+            }
+            else{
+                header("Location:index.php");
+                exit();
+            }
+        }
+        else{
+            header("Location: login.php?error=true");
+            exit();
+        }
+
+
+    }
+}
 
 
 ?>
@@ -18,6 +57,9 @@ include '../includes/database.php';
 <body>
     <?php include '../includes/header.php'; ?>
     <main>
+        <div class="Alert">
+            <p class="Alert">lala</p>
+        </div>
         <div class="container">
         <h2>Login</h2>
         <form action="login.php" method="post">

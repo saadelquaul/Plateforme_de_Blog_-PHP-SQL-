@@ -310,9 +310,9 @@ footer {
     }
   }
 }
-.hidden {
+/* .hidden {
   display: none;
-}
+} */
 .Alert {
   position: fixed;
   top: 120px;

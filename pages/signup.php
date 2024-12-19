@@ -13,17 +13,17 @@ if(isset($_POST['email'])){
         return;
     }
     if(strlen($password) < 8 || strlen($password) > 20){
-        echo "Password must be between 8 and 20 characters long";
-        exit;
+        
     }
     if($password!== $confirmPas){
         echo "Passwords do not match";
         exit;
     }
-    $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+    $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
     $sql = "INSERT INTO users (Name, Email, Password) VALUES ('$userName', '$email', '$hashedPassword')";
     mysqli_query($conn, $sql);
-    echo "Registration successful";
+    header("Location: login.php?message=Account Created Successfully.");
+    exit();
 
 
 }
