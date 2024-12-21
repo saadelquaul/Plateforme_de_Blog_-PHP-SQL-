@@ -78,9 +78,17 @@ fetch('../pages/blogForm.php')
     })
 })
 
-
-
-
-// article.forEach(element => {
-//     element.remove();
-// });
+const deleteBtn = document.querySelectorAll('.delete-article');
+deleteBtn.forEach(btn => {
+    btn.addEventListener('click',function(){
+        const article = document.querySelectorAll('article[data-id="'+btn.getAttribute('data-id')+'"]');
+        article[0].remove();
+        fetch('../pages/deleteArticle.php?id='+btn.getAttribute('data-id'))
+        .then(response => response.text())
+        .then(data => {
+            console.log(data);
+        })
+        .catch(error => {
+            console.error(error);});
+    })
+})
