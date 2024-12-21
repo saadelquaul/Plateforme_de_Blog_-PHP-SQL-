@@ -20,6 +20,28 @@ if(isset($_POST['title'])){
     header("Location: blog-feed.php");
     exit();
 }
+if(isset($_POST['EditedArticleId'])){
+    $EditedArticleID = intval($_POST['EditedArticleId']);
+    $title = $conn->real_escape_string($_POST['Editedtitle']);
+    $content = $conn->real_escape_string($_POST['Editedcontent']);
+    $category = intval($_POST['tags']);
+    $image = $_POST['Editedimage'];
+    $sql = "UPDATE blogs SET title = '$title', content = '$content', category = '$category' WHERE blogID = $EditedArticleID";
+    if($conn->query($sql) === TRUE){
+        header("Location: blog-feed.php");
+    }else {
+        echo "Error: " . $sql . "<br>" . $conn->error;
+    }
+    if($image != ""){
+        $sql = "UPDATE blogs SET image = '$image' WHERE blogID = $EditedArticleID";
+        if($conn->query($sql) === TRUE){
+            header("Location: blog-feed.php");
+        }else {
+            echo "Error: " . $sql . "<br>" . $conn->error;
+        }
+    }
+    $_POST['EditedArticleId'] = null;
+}
  ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -82,7 +104,7 @@ if(isset($_POST['title'])){
                         echo "<span class='category-badge'>".$tag['tagName']."</span>";
                         if(!empty($row['content'])){
                             $content = substr($row['content'], 0, 100);
-                            echo "<p>".$content."</p>";
+                            echo "<p class='content'>".$content."</p>";
                         }
                         echo "<div style='display:flex;align-self:end; justify-content:space-between;'>
                         <a href='#read-more'>Read More</a>

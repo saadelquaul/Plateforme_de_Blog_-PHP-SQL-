@@ -15,22 +15,8 @@ else {
 }
 ?>
 
-
-<form  action="blog-feed.php" method="post">
-                    <label for="title">Title:</label> 
-                    <input type="text" id="title" name="title">
-                    <label for="tags">Tags:</label>
                     <select name="tags" id="tags">
                         <?php
                             echo $option;
                         ?>
                     </select>
-                    <label for="image">
-                        IMAGE:
-                    </label>
-                    <input type="file" id="image" name="image">
-                    <label for="content">Content:</label>
-                    <textarea name="content" id="content" placeholder="Write your toughts here.."></textarea>
-
-                    <button type="submit">Submit</button>
-</form>
