@@ -1,7 +1,6 @@
 <?php 
 
 include '../includes/database.php';
-
 if(isset($_POST['email'])){
     $email = $_POST['email'];
     $password = $_POST['password'];
@@ -23,7 +22,7 @@ if(isset($_POST['email'])){
             $result = mysqli_query($conn, $sql);
             $row = mysqli_fetch_assoc($result);
             $_SESSION['role'] = $row['role'];
-            $_SESSION['id'] = $row['id'];
+            $_SESSION['userID'] = $row['userID'];
             if($row['role'] == 'admin'){
                 header("Location:../admin/dashboard.php");
                 exit();
